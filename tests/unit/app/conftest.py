@@ -11,6 +11,7 @@ def process_video(storage, video_repository):
 @pytest.fixture()
 def storage():
     storage = Mock(spec=Storage)
+    storage.download.return_value="foobar.mp4"
     return storage
 
 @pytest.fixture()
