@@ -6,9 +6,9 @@ This is a component that comunicates with other components via events. Receives 
 The workflow expected for the component is this:
 - Receives an notification about a video that an user uploaded. The event contains a video identifier and the key to the file in the storage.
 - Gets the file from the type of the storage and specified path.
-- Start to process the video and send an event that the video started to process.
-- If some error happen unmasker should send an event about the detection was failed.
-- If is a success unmasker should send an event with the information about how many people in the video appears without masks and its video identifier.
+- Start to process the video and store the video started to process.
+- If some error happen unmasker should mark that the detection in the video was failed.
+- If is a success unmasker should mark the video as success and store the information about how many people in the video appears without masks and its video identifier.
 
 Also, for operational purposes we want to register the videos that were received by unmasker and keep up to date it's status.
 
