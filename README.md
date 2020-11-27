@@ -14,7 +14,7 @@ Also, for operational purposes we want to register the videos that were received
 
 ## How to run
 
-This project uses Pipenv to manage the dependencies, to install it use 
+This project uses Pipenv to manage the dependencies, to install it use:
 
 `pipenv install --dev`
 
@@ -28,4 +28,4 @@ If you don't want to run the integration tests execute
 
 If you want to run only the integration tests execute
 
-`pipenv run pytest -m integration`
+`pipenv run pytest -m integration` Rompiendo

@@ -1,13 +1,23 @@
 from .video import Video
+from unmasker.infrastructure.video_repository import VideoRepository
+from .unmasked_recognizer import UnmaskedRecognizer
 
 class ProcessVideo():
-    def __init__(self, storage, video_repository):
-        self.__storage = storage
+    def __init__(self, video_repository: VideoRepository, unmasked_recognizer: UnmaskedRecognizer) -> None:
         self.__video_repository = video_repository
+        self.__unmasked_recognizer = unmasked_recognizer
 
-    def run(self, **uploaded_video):
-        video = Video(external_video_id=uploaded_video["video_id"], storage_key=uploaded_video["storage_key"])
-        video.received()
+    def run(self, video_id: str) -> None:
+        video = self.__video_repository.get(video_id)        
+        video.processing()        
         self.__video_repository.save(video)
-        video_path = self.__storage.download(uploaded_video["storage_key"])
-        return video_path
+
+        try:
+            unmasked_count = self.__unmasked_recognizer.count(video)
+            video.finished(unmasked_count)
+        except Exception as identifier:
+            video.failed(str(identifier))
+        finally:
+            self.__video_repository.save(video)       
+        
+        
